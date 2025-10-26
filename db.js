@@ -7,6 +7,7 @@ const db = new Pool({
   idleTimeoutMillis: 30000,
 });
 
+
 db.on("error", (err) => {
   console.error("PG Pool error:", err);
 });

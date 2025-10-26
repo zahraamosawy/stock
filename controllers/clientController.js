@@ -1,3 +1,5 @@
+// clientController.js
+
 const db = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -41,11 +43,26 @@ const login = async (phone, password) => {
     },
     process.env.SECRET_KEY
   );
+
   
   return { success: true, token: token };
 };
 
+// 1️⃣ GET /client/:id/balance
+//    ➤ Purpose: Return the balance of a specific client.
+//    ➤ Response: { id, name, balance }
+//
+
+const getClientByID = async (client_id) => {
+  const result = await db.query(
+    `SELECT id, name, balance FROM client WHERE id = ${client_id}`);
+  return result.rows[0];
+};
+
+
+
 module.exports = {
   register,
   login,
+  getClientByID,
 };

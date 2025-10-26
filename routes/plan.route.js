@@ -9,6 +9,7 @@ router.get("/", async (req, res) => {
     res.send(results);
     console.log(results);
   } catch (error) {
+        console.error("GET /plans ERROR:", error);
     res.status(500).send({ message: "اكو مشكله بالدنيا..." });
   }
 });
