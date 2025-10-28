@@ -1,7 +1,7 @@
 //client.router.js
 const express = require("express");
 const router = express.Router();
-const { register, login , getClientByID} = require("../controllers/clientController");
+const { register, login , getClientByID ,topUpBalance} = require("../controllers/clientController");
 const clientAuth = require("../middleware/clientAuth");
 
 
@@ -62,6 +62,9 @@ router.get("/:id/balance",clientAuth, async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+// 6️⃣ POST /client/:id/topup
+router.post("/:id/topup", topUpBalance);
 
 
 

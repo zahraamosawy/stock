@@ -1,3 +1,5 @@
+// index.js
+
 const express = require("express");
 const app = express();
 const PORT = 3000;
@@ -5,6 +7,8 @@ const db = require("./db");
 const plansRoutes = require("./routes/plan.route");
 const clientsRoutes = require("./routes/client.route");
 const StocksRoutes = require("./routes/stock.route");
+const invoiceRoutes = require("./routes/invoice.route");
+
 
 
 app.use(express.json());
@@ -16,6 +20,8 @@ app.get("/", async (req, res) => {
 app.use("/plans", plansRoutes);
 app.use("/client", clientsRoutes);
 app.use("/stock", StocksRoutes);
+app.use("/invoice", invoiceRoutes);
+
 
 
 

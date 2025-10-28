@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getPlans, getPlanById, purchase } = require("../controllers/planController");
+const { getPlans, getPlanById, purchase ,getPlanStockSummary} = require("../controllers/planController");
 const clientAuth = require("../middleware/clientAuth");
 
 router.get("/", async (req, res) => {
@@ -40,5 +40,7 @@ router.post("/purchase", clientAuth, async (req, res) => {
     res.status(500).send({ message: "اكو مشكله بالدنيا..." });
   }
 });
+// 5️⃣ GET /plans/:id/stock
+router.get("/:id/stock",getPlanStockSummary);
 
 module.exports = router;

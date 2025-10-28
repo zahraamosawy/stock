@@ -54,9 +54,33 @@ const purchase = async (planId, clientId) => {
 
   return { success: true, code: stock.code, newInvoice };
 };
+// 5️⃣ GET /plans/:id/stock
+const getPlanStockSummary = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { rows } = await db.query(`
+      SELECT
+        plan.id AS "planId",
+        plan.name AS "planName",
+        COUNT(CASE WHEN stock.state = 'ready' THEN 1 END) AS "ready",
+        COUNT(CASE WHEN stock.state = 'sold' THEN 1 END) AS "sold",
+        COUNT(CASE WHEN stock.state = 'error' THEN 1 END) AS "error"
+      FROM plan
+      LEFT JOIN stock ON stock.plan_id = plan.id
+      WHERE plan.id = $1
+      GROUP BY plan.id, plan.name;
+    `, [id]);
+    res.json(rows[0] || {});
+  } catch (error) {
+    console.error("GET /plans/:id/stock ERROR:", error);
+    res.status(500).json({ message: "حدث خطأ أثناء جلب الملخص" });
+  }
+};
+
 
 module.exports = {
   getPlans,
   getPlanById,
   purchase,
+  getPlanStockSummary
 };
